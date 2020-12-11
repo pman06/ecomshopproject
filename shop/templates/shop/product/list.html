@@ -1,0 +1,45 @@
+{% extends "shop/base.html" %}
+{% load static %}
+{% block title %}{% if category %}{{ category.name }} | {{ block.super }} {% else %} Products | {{block.super}}{% endif %}{% endblock %}
+{% block content %}
+  <div class="row">
+    <div class=" col-3 mt-5 ml-2">
+      <h4>Categories</h4>
+      <ul class="list-group ">
+          <a href="{% url 'shop:product_list' %}" class="list-group-item-action">
+            <li class="list-group-item {% if not category %}active{% endif %} ">
+              All
+            </li>
+          </a>
+        {% for c in categories %}
+            <a class="list-group-item-action" href="{{ c.get_absolute_url }}">
+              <li class="list-group-item {% if category.slug == c.slug %}active{% endif %} ">
+                {{ c.name }}
+              </li>
+            </a>
+        {% endfor %}
+      </ul>
+    </div>
+
+    <div class=" col-8">
+      <h1>{% if category %}{{ category.name }}{% else %}Products{% endif %}</h1>
+      <div class="row">
+        {% for product in products %}
+            <div class="col-sm-4 mb-4">
+              <a href="{{ product.get_absolute_url }}">
+                <div class="card">
+                  <div class="text-center px-20 py-10">
+                      <img class="card-img-top" src="{% if product.image %}{{ product.image.url }} {% else %}{% static "img/no_image.png" %}{% endif %}" alt="{{ product.name }} image">
+                      <div class="card-body">
+                        <a class="card-title" href="{{ product.get_absolute_url }}">{{ product.name }}</a>
+                        <p class="card-text">${{ product.price }}</p>
+                      </div>
+                  </div>
+                </div>
+              </a>
+            </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+{% endblock %}
