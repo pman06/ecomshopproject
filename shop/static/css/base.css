@@ -7,3 +7,13 @@
 td{
   vertical-align: middle !important;
 }
+
+td form select{
+  float:left;
+  margin-right: 15px;
+  
+}
+
+table.cart tbody tr td img{
+  width:180px;
+}

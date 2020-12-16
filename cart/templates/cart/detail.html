@@ -10,7 +10,7 @@
       <div class="col-12">
         <div class="table-responsive">
 
-          <table class="table ">
+          <table class="table cart">
             <thead class="text-light">
               <tr class="bg-primary">
                 <th>Image</th>
@@ -24,10 +24,10 @@
             <tbody>
               {% for item in cart %}
               {% with product=item.product %}
-              <tr class="vertical-align">
+              <tr>
                 <td>
                   <a href="{{ product.get_absolute_url }}">
-                    <img class="img-thumbnail w-50" src="{% if product.image %}{{ product.image.url }} {% else %}{% static "img/no_image.png" %}{% endif %}" alt="">
+                    <img class="img-thumbnail" src="{% if product.image %}{{ product.image.url }} {% else %}{% static "img/no_image.png" %}{% endif %}" alt="">
                   </a>
                 </td>
                 <td>{{ product.name }}</td>

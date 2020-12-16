@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <title>{% block title %}My Shop{% endblock %}</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-    <link rel="stylesheet" href="{% static 'css/base.css' %}/?ver=1.2">
+    <link rel="stylesheet" href="{% static 'css/base.css' %}/?ver=1.29">
     <script src="https://kit.fontawesome.com/6bccc1c604.js" crossorigin="anonymous"></script>
   </head>
   <body>
@@ -26,7 +26,21 @@
             <input class="form-control mr-sm-2" type="search" name="query" value="">
             <input class="btn btn-primary my-2 my-sm-0" type="submit" name="" value="Search">
           </form>
-          <a class="nav-link" href="#"><i class="fas fa-shopping-cart fa-sm"></i> Your cart is empty</a>
+          <div class="nav-item">
+            {% with total_items=cart|length %}
+              {% if total_items > 0 %}
+              <a class="nav-link" href="{% url 'cart:cart_detail' %}">
+                <i class="fas fa-shopping-cart fa-sm"></i>
+                Your cart:
+                  {{ total_items }} item{{ total_item|pluralize }}
+                  ${{ cart.get_total_price }}
+                </a>
+              {% else %}
+                <a class="nav-link" href="#"><i class="fas fa-shopping-cart fa-sm"></i>
+                  Your cart is empty</a>
+              {% endif %}
+            {% endwith %}
+          </div>
         </ul>
       </div>
     </nav>
