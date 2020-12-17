@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <title>{% block title %}My Shop{% endblock %}</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-    <link rel="stylesheet" href="{% static 'css/base.css' %}/?ver=1.29">
+    <link rel="stylesheet" href="{% static 'css/base.css' %}/?ver=1.31">
     <script src="https://kit.fontawesome.com/6bccc1c604.js" crossorigin="anonymous"></script>
   </head>
   <body>
@@ -32,7 +32,7 @@
               <a class="nav-link" href="{% url 'cart:cart_detail' %}">
                 <i class="fas fa-shopping-cart fa-sm"></i>
                 Your cart:
-                  {{ total_items }} item{{ total_item|pluralize }}
+                   <span class="badge badge-danger badge-pill">{{ total_items }}</span> item{{ total_item|pluralize }}
                   ${{ cart.get_total_price }}
                 </a>
               {% else %}
@@ -44,7 +44,17 @@
         </ul>
       </div>
     </nav>
-
+    <div class="content container">
+      {% if messages %}
+        {% for message in messages %}
+          <ul class=" mt-3 alert show fade {% if message.tags == 'success' %}alert-success{% elif  message.tags == 'error' %}alert-danger{% elif  message.tags == 'info' %}alert-primary{% elif  message.tags == 'warning' %}alert-warning{% endif %}" role="alert">
+                {{ message | safe }}
+                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+          </ul>
+        {% endfor %}
+      {% endif %}
     {# <div class="container"> #}
       {% block content %}
 
@@ -54,5 +64,10 @@
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+      setTimeout(function(){
+        $('.alert').remove();
+      }, 5000)
+    </script>
   </body>
 </html>

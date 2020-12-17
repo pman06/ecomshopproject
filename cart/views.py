@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_POST
+from django.contrib import messages
 from shop.models import Product
 from .cart import Cart
 from .forms import CartAddProductForm
@@ -15,6 +16,7 @@ def cart_add(request, product_id):
         cd = form.cleaned_data
         print(cd['override'])
         cart.add(product=product, quantity=cd['quantity'], override_quantity=cd['override'])
+        messages.success(request, "Product added to cart successfully")
     return redirect('cart:cart_detail')
 
 @require_POST
