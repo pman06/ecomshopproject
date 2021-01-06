@@ -23,6 +23,7 @@ form p label {
     padding-bottom:4px;
 }
 
+
 form p input {
     width:300px;
     font-size:13px;
@@ -71,4 +72,28 @@ form p input {
 
 .order-info span {
     float:right;
+}
+
+
+/* braintree hosted fields */
+form div.field {
+  font-size:13px;
+  color:#666;
+  width:300px;
+  height:22px;
+  margin-bottom:10px;
+  padding:6px 12px;
+  border:0;
+  background:#efefef;
+  color:#666;
+  border-radius:4px;
+}
+
+form#payment input[type="submit"] {
+    color:#fff;
+    background:#5993bb;
+    border-radius:4px;
+    padding:10px 20px;
+    font-size:14px;
+    border:0;
 }

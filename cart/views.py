@@ -14,7 +14,6 @@ def cart_add(request, product_id):
     form = CartAddProductForm(request.POST)
     if form.is_valid():
         cd = form.cleaned_data
-        print(cd['override'])
         cart.add(product=product, quantity=cd['quantity'], override_quantity=cd['override'])
         messages.success(request, "Product added to cart successfully")
     return redirect('cart:cart_detail')
