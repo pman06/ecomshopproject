@@ -1,7 +1,9 @@
 from django.urls import reverse
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
-# from django.contrib.auth.models import login_required
+from django.contrib.admin.views.decorators import staff_member_required
+from django.utils.safestring import mark_safe
+
 from .models import Order, OrderItem
 from .forms import OrderCreateForm
 from cart.cart import Cart
@@ -28,8 +30,14 @@ def order_create(request):
                     return redirect(reverse('payment:process'))
             else:
                 #if no product is added to cart, return an error message to the user.
-                message ='Your cart is empty. Please <a href="/">add products to cart.</a>'
+                url = reverse("shop:product_list")
+                message =mark_safe(f'Your cart is empty. Please <a href={url}>add products to cart.</a>')
                 messages.error(request, message)
     else:
         form = OrderCreateForm()
     return render(request, 'orders/order/create.html', {'cart':cart,'form':form})
+
+@staff_member_required
+def admin_order_detail(request, order_id):
+    order = get_object_or_404(Order, id=order_id)
+    return render(request, 'admin/orders/order/detail.html', {'order':order})
