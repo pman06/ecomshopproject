@@ -47,7 +47,7 @@ class OrderItemInline(admin.TabularInline):
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
     #order_detail = order_detail(modelAdmin.model)
-    list_display = ['order_id', 'braintree_id','first_name', 'last_name', 'email', 'address', 'postal_code', 'city', 'paid','created',order_detail, order_pdf]
+    list_display = ['order_id', 'braintree_id','first_name', 'last_name', 'email','coupon', 'discount', 'paid','created',order_detail, order_pdf]
     list_filter = ['paid', 'created', 'updated']
     inlines = [OrderItemInline]
     actions = [export_to_csv]

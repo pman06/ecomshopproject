@@ -51,7 +51,7 @@
 
   <div class="module">
     <h2>Item bought</h2>
-    <table style="width:100%">
+    <table class="table table-dark table-striped" style="width:100%">
       <thead>
         <tr>
           <th>Product</th>
@@ -62,14 +62,21 @@
       </thead>
       <tbody>
         {% for item in order.items.all %}
-          <tr class="row{% cycle "1" "2" %}">
+          <tr>
             <td>{{ item.product.name }}</td>
             <td class="num">${{ item.price }}</td>
             <td class="num">{{ item.quantity }}</td>
             <td class="num">${{ item.get_cost }}</td>
           </tr>
         {% endfor %}
-        <tr class="total">
+        {% if order.coupon %}
+          <tr>
+            <td>Coupon Applied</td>
+            <td class="num">{{ order.coupon }} ({{ order.discount }}% off)</td>
+          </tr>
+
+        {% endif %}
+        <tr>
           <td colspan="3">Total</td>
           <td class="num">${{ order.get_total_cost }}</td>
         </tr>
