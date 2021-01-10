@@ -74,9 +74,17 @@
           </table>
           <p>Appy a coupon:</p>
           <form action="{% url 'coupons:apply' %}" method="post">
-            {{ coupon_apply_form }}
-            <input class="btn btn-primary" type="submit" name="" value="Apply">
+            {% for field in coupon_apply_form  %}
+              {{ field.label }}
+              {{ field }}
+              <input class="btn btn-primary" type="submit" name="" value="Apply">
+              {% for error in field.errors %}
+                <div class="text-danger">
+                  {{ error }}
+                </div>
+              {% endfor %}
             {% csrf_token %}
+            {% endfor %}
           </form>
         </div>
         <p class="text-right">
