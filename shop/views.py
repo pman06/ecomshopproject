@@ -15,5 +15,10 @@ def product_list_view(request,  category_slug=None):
 
 def product_detail_view(request, id, slug):
     product = get_object_or_404(Product, id=id, slug=slug, available=True)
+    try:
+        related = Product.objects.filter(category=product.category).exclude(id=product.id)
+    except Product.DoesNotExist:
+        pass
     cart_product_form = CartAddProductForm()
-    return render(request, 'shop/product/detail.html', {'product':product, 'cart_product_form':cart_product_form})
+    context = {'product':product,'cart_product_form':cart_product_form, 'related':related}
+    return render(request, 'shop/product/detail.html',context)
