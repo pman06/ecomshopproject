@@ -8,8 +8,10 @@ services:
       - .:/code
     ports:
       - 8000:8000
+      - 5555-5555
     depends_on:
       - db
+      - rabbit
 
   db:
     image: postgres:11
@@ -17,6 +19,30 @@ services:
       - postgres_data:/var/lib/postgresql/data/
     environment:
       - "POSTGRES_HOST_AUTH_METHOD=trust"
+
+  celery_worker:
+    build: .
+    command: sh -c "celery -A myshop worker -l info"
+    container_name: celery_worker
+    depends_on:
+      - web
+      - db
+      - rabbit
+
+  flower:
+    build: .
+    command: celery -A myshop flower
+    ports:
+      - 5555:5555
+
+
+  rabbit:
+    image: rabbitmq:3-management
+    hostname: my-rabbit
+    ports:
+      - 15672:15672
+    depends_on:
+      - db
 
 volumes:
   postgres_data:

@@ -2,10 +2,11 @@ from django import forms
 from django.core.exceptions import ValidationError
 from .models import Coupon
 from django.utils import timezone
+from django.utils.translation import gettext_lazy as _
 from django.shortcuts import get_object_or_404
 
 class CouponApplyForm(forms.Form):
-    code = forms.CharField(label='Coupon',)
+    code = forms.CharField(label=_('Coupon'))
 
     def clean_code(self):
         now = timezone.now()

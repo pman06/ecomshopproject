@@ -1,4 +1,5 @@
 {% extends "shop/base.html" %}
+{% load i18n %}
 {% load static %}
 {% block title %}{{ product.name }} | {{ block.super }}{% endblock %}
 {% block content %}
@@ -18,7 +19,7 @@
             <form action="{% url 'cart:cart_add' product.id %}" method="post">
               {% csrf_token %}
               {{ cart_product_form }}
-              <input class="btn btn-primary" type="submit" value="Add to cart">
+              <input class="btn btn-primary" type="submit" value="{% trans "Add to cart" %}">
             </form>
           </div>
         </div>
@@ -42,7 +43,7 @@
       <!--<div class="col-1">
       </div>-->
       <div class="col-3">
-        <h2>Related Products</h2>
+        <h2>{% trans "Related Products" %}</h2>
         {% for item in related %}
           <div class="col-8">
             <img class="card-img" src="{% if item.image %}{{ item.image.url }}{% else %}{% static "img/no_image.png" %}{% endif %}" alt="{{ item.name }} image">

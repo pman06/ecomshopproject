@@ -1,16 +1,17 @@
+{% load i18n %}
 {% load static %}
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title>{% block title %}My Shop{% endblock %}</title>
+    <title>{% block title %}{% trans "My shop" %}{% endblock %}</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link rel="stylesheet" href="{% static 'css/base.css' %}/?ver=31.51">
     <script src="https://kit.fontawesome.com/6bccc1c604.js" crossorigin="anonymous"></script>
   </head>
   <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light techfont ">
-      <a class="navbar-brand bigbrand" href="#">My Shop</a>
+      <a class="navbar-brand bigbrand" href="#">{% trans "My Shop" %}</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -31,13 +32,17 @@
               {% if total_items > 0 %}
               <a class="nav-link" href="{% url 'cart:cart_detail' %}">
                 <i class="fas fa-shopping-cart fa-sm"></i>
-                Your cart:
-                   <span class="badge badge-danger badge-pill">{{ total_items }}</span> item{{ total_item|pluralize }}
-                  ${{ cart.get_total_price }}
+                {% trans "Your cart" %}:
+                {% blocktrans with total=cart.get_total_price count items=total_items %}
+
+                  <span class="badge badge-danger badge-pill">{{ items }}</span> item, ${{ total }}
+                  {% plural %}
+                  <span class="badge badge-danger badge-pill">{{ items }}</span> items, ${{ total }}
+                {% endblocktrans %}
                 </a>
               {% else %}
                 <a class="nav-link" href="#"><i class="fas fa-shopping-cart fa-sm"></i>
-                  Your cart is empty</a>
+                  {% trans "Your cart is empty." %}</a>
               {% endif %}
             {% endwith %}
           </div>
