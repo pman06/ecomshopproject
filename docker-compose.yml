@@ -34,6 +34,9 @@ services:
     command: celery -A myshop flower
     ports:
       - 5555:5555
+    depends_on:
+      - celery_worker
+      
 
 
   rabbit:
